@@ -1,17 +1,19 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { useEffect, useState } from 'react';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import AuthPage from './pages/auth/auth.component';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { setCurrentUser } from './redux/user/user.actions';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-
-  console.log('user', currentUser);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     auth.onAuthStateChanged(async (userAuth) => {
@@ -19,21 +21,24 @@ function App() {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef?.onSnapshot((snapShot) => {
-          setCurrentUser({ id: snapShot.id, ...snapShot.data() });
+          dispatch(setCurrentUser({ id: snapShot.id, ...snapShot.data() }));
         });
       }
 
-      setCurrentUser(userAuth);
+      dispatch(setCurrentUser(userAuth));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
-      <Header currentUser={currentUser} />
+      <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/shop' element={<ShopPage />} />
-        <Route path='/signin' element={<AuthPage />} />
+        <Route
+          path='/signin'
+          element={user.currentUser ? <Navigate to='/' /> : <AuthPage />}
+        />
       </Routes>
     </div>
   );
