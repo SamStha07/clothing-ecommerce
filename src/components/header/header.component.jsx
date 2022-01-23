@@ -5,10 +5,14 @@ import { useSelector } from 'react-redux';
 import './header.styles.scss';
 
 import { auth } from '../../firebase/firebase.utils';
-import { ReactComponent as Logo } from '../../assets/crown.svg';
+import { ReactComponent as Logo } from 'assets/crown.svg';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from 'components/cart-dropdown/cart-dropdown.component';
 
 const Header = () => {
-  const user = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
+  const { hidden } = useSelector((state) => state.cart);
+
   return (
     <div className='header'>
       <Link className='logo-container' to='/'>
@@ -21,7 +25,7 @@ const Header = () => {
         <Link className='option' to='/shop'>
           CONTACT
         </Link>
-        {user.currentUser ? (
+        {currentUser ? (
           <div className='option' onClick={() => auth.signOut()}>
             SIGN OUT
           </div>
@@ -30,7 +34,9 @@ const Header = () => {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {hidden ? null : <CartDropdown />}
     </div>
   );
 };

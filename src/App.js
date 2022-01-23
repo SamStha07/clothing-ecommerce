@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './App.css';
 
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import Header from './components/header/header.component';
-import AuthPage from './pages/auth/auth.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { setCurrentUser } from './redux/user/user.actions';
+import { setCurrentUser } from 'redux/user/user.actions';
+import Header from 'components/header/header.component';
+import HomePage from 'pages/homepage/homepage.component';
+import ShopPage from 'pages/shop/shop.component';
+import Auth from 'pages/auth/auth.component';
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -32,12 +32,13 @@ function App() {
   return (
     <div>
       <Header />
+
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/shop' element={<ShopPage />} />
         <Route
           path='/signin'
-          element={user.currentUser ? <Navigate to='/' /> : <AuthPage />}
+          element={user.currentUser ? <Navigate to='/' /> : <Auth />}
         />
       </Routes>
     </div>
