@@ -1,6 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { useEffect, useState } from 'react';
 
 import HomePage from './pages/homepage/homepage.component';
@@ -14,8 +14,18 @@ function App() {
   console.log('user', currentUser);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => setCurrentUser(user));
-  }, [currentUser]);
+    auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef?.onSnapshot((snapShot) => {
+          setCurrentUser({ id: snapShot.id, ...snapShot.data() });
+        });
+      }
+
+      setCurrentUser(userAuth);
+    });
+  }, []);
 
   return (
     <div>
