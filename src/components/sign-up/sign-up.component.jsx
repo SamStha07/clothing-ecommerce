@@ -19,8 +19,6 @@ const SignUp = () => {
 
     const { displayName, email, password, confirmPassword } = values;
 
-    console.log('values', values);
-
     if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
