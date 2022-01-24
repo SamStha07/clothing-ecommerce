@@ -10,9 +10,12 @@ import Header from 'components/header/header.component';
 import HomePage from 'pages/homepage/homepage.component';
 import ShopPage from 'pages/shop/shop.component';
 import Auth from 'pages/auth/auth.component';
+import { selectCurrentUser } from 'redux/user/user.selector';
+import CheckoutPage from 'pages/checkout/checkout.component';
 
 function App() {
-  const user = useSelector((state) => state.user);
+  const currentUser = useSelector((state) => selectCurrentUser(state));
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,8 +41,9 @@ function App() {
         <Route path='/shop' element={<ShopPage />} />
         <Route
           path='/signin'
-          element={user.currentUser ? <Navigate to='/' /> : <Auth />}
+          element={currentUser ? <Navigate to='/' /> : <Auth />}
         />
+        <Route path='/checkout' element={<CheckoutPage />} />
       </Routes>
     </div>
   );
