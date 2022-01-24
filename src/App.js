@@ -5,13 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { setCurrentUser } from 'redux/user/user.actions';
-import Header from 'components/header/header.component';
-import HomePage from 'pages/homepage/homepage.component';
-import ShopPage from 'pages/shop/shop.component';
-import Auth from 'pages/auth/auth.component';
-import { selectCurrentUser } from 'redux/user/user.selector';
-import CheckoutPage from 'pages/checkout/checkout.component';
+import { setCurrentUser } from './redux/user/user.actions';
+import { selectCurrentUser } from './redux/user/user.selector';
+
+import Header from './components/header/header.component';
+import HomePage from './pages/homepage/homepage.component';
+import ShopPage from './pages/shop/shop.component';
+import CollectionsOverview from './components/collections-overview/collections-overview.component';
+import CollectionPage from './pages/collection/collection.component';
+import Auth from './pages/auth/auth.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 function App() {
   const currentUser = useSelector((state) => selectCurrentUser(state));
@@ -38,7 +41,10 @@ function App() {
 
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/shop' element={<ShopPage />} />
+        <Route path='/shop' element={<ShopPage />}>
+          <Route path='' element={<CollectionsOverview />} />
+          <Route path=':categoryId' element={<CollectionPage />} />
+        </Route>
         <Route
           path='/signin'
           element={currentUser ? <Navigate to='/' /> : <Auth />}

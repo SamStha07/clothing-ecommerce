@@ -1,14 +1,16 @@
-import CustomButton from 'components/custom-button/custom-button.component';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addItemToCart } from 'redux/cart/cart.actions';
+import { useNavigate } from 'react-router-dom';
+
+import { addItemToCart } from 'src/redux/cart/cart.actions';
+import CustomButton from '../custom-button/custom-button.component';
 
 import './collection-item.styles.scss';
 
-const CollectionItem = ({ item }) => {
-  const { imageUrl, name, price } = item;
-
+const CollectionItem = ({ item, routeName }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { imageUrl, name, price } = item;
 
   const handleAddToCart = () => {
     dispatch(addItemToCart(item));
@@ -21,6 +23,7 @@ const CollectionItem = ({ item }) => {
         style={{
           backgroundImage: `url(${imageUrl})`,
         }}
+        onClick={() => navigate(`/shop/${routeName}`)}
       />
       <div className='collection-footer'>
         <span className='name'>{name}</span>
