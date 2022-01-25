@@ -43,7 +43,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/shop' element={<ShopPage />}>
           <Route path='' element={<CollectionsOverview />} />
-          <Route path=':categoryId' element={<CollectionPage />} />
+          <Route path=':collectionUrlParam' element={<CollectionPage />} />
         </Route>
         <Route
           path='/signin'
