@@ -32,6 +32,12 @@ function App() {
       }
 
       dispatch(setCurrentUser(userAuth));
+      // we are storing our SHOP_DATA into firestore
+      // const collectionsArray useSelector((state) => selectCollectionArray(state));
+      // addCollectionAndDocuments(
+      //   'collections',
+      //   collectionsArray.map(({ title, items }) => ({ title, items }))
+      // );
     });
   }, [dispatch]);
 

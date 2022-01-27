@@ -1,0 +1,3 @@
+export const ShopTypes = {
+  FETECH_ALL_COLLECTIONS: 'FETCH_ALL_COLLECTIONS',
+};

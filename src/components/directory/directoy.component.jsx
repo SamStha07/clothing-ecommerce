@@ -9,8 +9,6 @@ import './directory.styles.scss';
 const Directory = () => {
   const sections = useSelector((state) => selectDirectorySections(state));
 
-  console.log('sections', sections);
-
   return (
     <div className='directory-menu'>
       {sections?.map((section) => (
