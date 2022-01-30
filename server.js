@@ -1,15 +1,19 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import path from 'path';
-import dotenv from 'dotenv';
-import stripe from 'stripe';
+// import express from 'express';
+// import cors from 'cors';
+// import bodyParser from 'body-parser';
+// import path from 'path';
+// import dotenv from 'dotenv';
+// import stripe from 'stripe';
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const path = require('path');
 
 if (process.env.NODE_ENV !== 'production') {
-  dotenv.config();
+  const dotenv = require('dotenv').config();
 }
 
-const stripeValue = stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -46,7 +50,7 @@ app.post('/payment', (req, res) => {
     currency: 'usd',
   };
 
-  stripeValue.charges.create(body, (stripeErr, stripeRes) => {
+  stripe.charges.create(body, (stripeErr, stripeRes) => {
     if (stripeErr) {
       res.status(500).send({ error: stripeErr });
     } else {
