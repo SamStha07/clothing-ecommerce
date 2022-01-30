@@ -18,7 +18,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     credentials: true,
-    origin: process.env.ORIGIN,
+    origin:
+      process.env.NODE_ENV === 'production'
+        ? process.env.ORIGIN_PROD
+        : process.env.ORIGIN,
     optionsSuccessStatus: 200,
   })
 );
