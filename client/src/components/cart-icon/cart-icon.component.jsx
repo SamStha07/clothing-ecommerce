@@ -10,7 +10,7 @@ import { selectCartItemsCount } from 'src/redux/cart/cart.selectors';
 const CartIcon = () => {
   const dispatch = useDispatch();
 
-  const itemsCount = useSelector((state) => selectCartItemsCount(state));
+  const itemsCount = useSelector(selectCartItemsCount);
 
   const handleToggleCart = () => {
     dispatch(toggleCartHidden());

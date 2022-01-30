@@ -13,7 +13,7 @@ const CartDropdown = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const cartItems = useSelector((state) => selectCartItems(state));
+  const cartItems = useSelector(selectCartItems);
 
   const handleCheckout = async () => {
     await dispatch(toggleCartHidden());

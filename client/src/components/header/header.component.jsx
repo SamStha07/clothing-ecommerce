@@ -16,8 +16,8 @@ import {
 } from './Header.styles';
 
 const Header = () => {
-  const currentUser = useSelector((state) => selectCurrentUser(state));
-  const hidden = useSelector((state) => selectCartHidden(state));
+  const currentUser = useSelector(selectCurrentUser);
+  const hidden = useSelector(selectCartHidden);
 
   return (
     <HeaderContainer>
