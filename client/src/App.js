@@ -1,13 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-
-import './App.css';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
+
+import { GlobalStyle } from './global.styles';
 
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
@@ -44,6 +43,7 @@ function App() {
 
   return (
     <div>
+      <GlobalStyle />
       <Header />
 
       <Routes>

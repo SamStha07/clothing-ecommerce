@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   border: 1px solid black;
-  margin: 0 7.5px 15px;
   overflow: hidden;
   position: relative;
 
@@ -24,12 +23,16 @@
     height: 380px;
   }
 
-  &:first-child {
-    margin-right: 7.5px;
-  }
+  @media screen and (max-width: 768px) {
+    height: 200px;
+    min-width: 40%;
 
-  &:last-child {
-    margin-left: 7.5px;
+    &.large {
+      height: 200px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 
   .background-image {
