@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
@@ -9,12 +9,18 @@ import { selectCurrentUser } from './redux/user/user.selector';
 import { GlobalStyle } from './global.styles';
 
 import Header from './components/header/header.component';
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import CollectionsOverview from './components/collections-overview/collections-overview.component';
-import CollectionPage from './pages/collection/collection.component';
-import Auth from './pages/auth/auth.component';
-import CheckoutPage from './pages/checkout/checkout.component';
+import WithSpinner from './components/with-spinner/with-spinner.component';
+
+const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
+const ShopPage = lazy(() => import('./pages/shop/shop.component'));
+const CollectionsOverview = lazy(() =>
+  import('./components/collections-overview/collections-overview.component')
+);
+const CollectionPage = lazy(() =>
+  import('./pages/collection/collection.component')
+);
+const Auth = lazy(() => import('./pages/auth/auth.component'));
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout.component'));
 
 function App() {
   const currentUser = useSelector((state) => selectCurrentUser(state));
@@ -44,20 +50,23 @@ function App() {
   return (
     <div>
       <GlobalStyle />
+
       <Header />
 
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/shop' element={<ShopPage />}>
-          <Route path='' element={<CollectionsOverview />} />
-          <Route path=':collectionUrlParam' element={<CollectionPage />} />
-        </Route>
-        <Route
-          path='/signin'
-          element={currentUser ? <Navigate to='/' /> : <Auth />}
-        />
-        <Route path='/checkout' element={<CheckoutPage />} />
-      </Routes>
+      <Suspense fallback={<WithSpinner />}>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/shop' element={<ShopPage />}>
+            <Route path='' element={<CollectionsOverview />} />
+            <Route path=':collectionUrlParam' element={<CollectionPage />} />
+          </Route>
+          <Route
+            path='/signin'
+            element={currentUser ? <Navigate to='/' /> : <Auth />}
+          />
+          <Route path='/checkout' element={<CheckoutPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
