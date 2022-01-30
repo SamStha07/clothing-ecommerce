@@ -1,9 +1,3 @@
-// import express from 'express';
-// import cors from 'cors';
-// import bodyParser from 'body-parser';
-// import path from 'path';
-// import dotenv from 'dotenv';
-// import stripe from 'stripe';
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');

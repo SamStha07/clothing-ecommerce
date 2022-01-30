@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 import './App.css';
 
@@ -40,6 +41,9 @@ function App() {
       // );
     });
   }, [dispatch]);
+
+  axios.defaults.baseURL = 'http://localhost:5000';
+  axios.defaults.withCredentials = true;
 
   return (
     <div>
