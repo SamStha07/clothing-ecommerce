@@ -10,6 +10,7 @@ import { GlobalStyle } from './global.styles';
 
 import Header from './components/header/header.component';
 import WithSpinner from './components/with-spinner/with-spinner.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const ShopPage = lazy(() => import('./pages/shop/shop.component'));
@@ -53,20 +54,22 @@ function App() {
 
       <Header />
 
-      <Suspense fallback={<WithSpinner />}>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/shop' element={<ShopPage />}>
-            <Route path='' element={<CollectionsOverview />} />
-            <Route path=':collectionUrlParam' element={<CollectionPage />} />
-          </Route>
-          <Route
-            path='/signin'
-            element={currentUser ? <Navigate to='/' /> : <Auth />}
-          />
-          <Route path='/checkout' element={<CheckoutPage />} />
-        </Routes>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<WithSpinner />}>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/shop' element={<ShopPage />}>
+              <Route path='' element={<CollectionsOverview />} />
+              <Route path=':collectionUrlParam' element={<CollectionPage />} />
+            </Route>
+            <Route
+              path='/signin'
+              element={currentUser ? <Navigate to='/' /> : <Auth />}
+            />
+            <Route path='/checkout' element={<CheckoutPage />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
