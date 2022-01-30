@@ -8,7 +8,7 @@ import { selectIsCollectionFetching } from 'src/redux/shop/shop.selector';
 const ShopPage = () => {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector((state) => selectIsCollectionFetching(state));
+  const isLoading = useSelector(selectIsCollectionFetching);
 
   useEffect(() => {
     dispatch(fetchCollectionsStartAsync());

@@ -10,7 +10,7 @@ import './collections-overview.styles.scss';
 
 const CollectionsOverview = () => {
   const [isLoading] = useOutletContext();
-  const collections = useSelector((state) => selectCollectionArray(state));
+  const collections = useSelector(selectCollectionArray);
 
   if (isLoading) return <WithSpinner />;
 

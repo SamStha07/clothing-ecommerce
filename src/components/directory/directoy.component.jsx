@@ -7,7 +7,7 @@ import MenuItem from '../menu-item/menu-item.component';
 import './directory.styles.scss';
 
 const Directory = () => {
-  const sections = useSelector((state) => selectDirectorySections(state));
+  const sections = useSelector(selectDirectorySections);
 
   return (
     <div className='directory-menu'>

@@ -12,9 +12,7 @@ const CollectionPage = () => {
   let [isLoading] = useOutletContext();
 
   const { collectionUrlParam } = useParams();
-  const collection = useSelector((state) =>
-    selectCollection(collectionUrlParam)(state)
-  );
+  const collection = useSelector(selectCollection(collectionUrlParam));
 
   if (isLoading) return <WithSpinner />;
 
